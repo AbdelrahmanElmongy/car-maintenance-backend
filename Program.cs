@@ -17,7 +17,16 @@ builder.Services.AddCors(options =>
 // Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Car Maintenance API",
+        Version = "v1",
+        Description = "API for the Car Maintenance management system — includes admin dashboard, notifications, order search, and test items."
+    });
+    options.EnableAnnotations();
+});
 
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
