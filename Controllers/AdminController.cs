@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using CarMaintenance.Models;
+
+    
+
 
 [ApiController]
 [Route("api/admin")]
@@ -131,16 +135,23 @@ public IActionResult GetNotifications()
         notifications
     ));
 }
-[HttpGet("search")]
-public IActionResult Search(string query)
+[HttpGet("/searchOrders")]
+public IActionResult Search(string? query)
 {
-    var result = new List<string>
-    {
-        $"Result for {query} 1",
-        $"Result for {query} 2"
-    };
+    var orders = new List<Order>
+{
+    new Order { Id = 1, CustomerName = "Ahmed", Service = "Oil Change", Price = 350, Status = "pending" },
+    new Order { Id = 2, CustomerName = "Ali", Service = "Battery Change", Price = 500, Status = "completed" }
+};
+    
+     if (string.IsNullOrWhiteSpace(query))
+        return Ok(orders); 
 
-    return Ok(new ApiResponse<List<string>>(
+   var result = orders
+    .Where(o => o.CustomerName.ToLower().Contains(query.ToLower()) 
+             || o.Service.ToLower().Contains(query.ToLower()))
+    .ToList();
+    return Ok(new ApiResponse<object>(
         true,
         "Search completed",
         result

@@ -1,29 +1,38 @@
+using Microsoft.EntityFrameworkCore;
+using CarMaintenance.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
-// Add services
+// Services
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer(); // مهم
-builder.Services.AddSwaggerGen(); // مهم
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
-// Enable Swagger
+// Middleware order مهم جدًا 👇
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors("AllowAll");   // 👈 هنا قبل Authorization
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
-app.UseCors("AllowAll");
