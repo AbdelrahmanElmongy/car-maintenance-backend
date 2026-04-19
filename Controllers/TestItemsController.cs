@@ -7,7 +7,6 @@ namespace CarMaintenance.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [ApiExplorerSettings(GroupName = "TestItems")]
     public class TestItemsController : ControllerBase
     {
         private readonly AppDbContext _context;

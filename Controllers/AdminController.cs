@@ -6,7 +6,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 [ApiController]
 [Route("api/admin")]
-[ApiExplorerSettings(GroupName = "Admin")]
 public class AdminController : ControllerBase
 {
     /// <summary>
@@ -166,19 +165,25 @@ public class AdminController : ControllerBase
     )]
     public IActionResult Search([FromQuery] string? query)
     {
-        var orders = new List<Order>
-    {
-        new Order { Id = 1, CustomerName = "Ahmed", Service = "Oil Change", Price = 350, Status = "pending" },
-        new Order { Id = 2, CustomerName = "Ali", Service = "Battery Change", Price = 500, Status = "completed" }
-    };
-    
-         if (string.IsNullOrWhiteSpace(query))
-            return Ok(orders); 
+        var orders = new List<object>
+        {
+            new { Id = 1, CustomerName = "Ahmed", Service = "Oil Change", Price = 350, Status = "pending" },
+            new { Id = 2, CustomerName = "Ali", Service = "Battery Change", Price = 500, Status = "completed" }
+        };
 
-       var result = orders
-        .Where(o => o.CustomerName.ToLower().Contains(query.ToLower()) 
-                 || o.Service.ToLower().Contains(query.ToLower()))
-        .ToList();
+        if (string.IsNullOrWhiteSpace(query))
+            return Ok(orders);
+
+        var result = orders
+            .Where(o =>
+            {
+                var name = o.GetType().GetProperty("CustomerName")?.GetValue(o)?.ToString() ?? "";
+                var service = o.GetType().GetProperty("Service")?.GetValue(o)?.ToString() ?? "";
+                return name.ToLower().Contains(query.ToLower())
+                    || service.ToLower().Contains(query.ToLower());
+            })
+            .ToList();
+
         return Ok(new ApiResponse<object>(
             true,
             "Search completed",

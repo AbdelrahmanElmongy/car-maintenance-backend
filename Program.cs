@@ -30,9 +30,25 @@ builder.Services.AddSwaggerGen(options =>
 
 // DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseInMemoryDatabase("CarMaintenanceDb"));
 
 var app = builder.Build();
+
+// Ensure Database is created and add mockup data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+    
+    if (!context.Orders.Any())
+    {
+        context.Orders.AddRange(
+            new CarMaintenance.Models.Order { UserId = 1, VehicleId = 1, ServiceId = 1, Address = "123 Main St", PhoneNumber = "555-1234", OrderStatus = CarMaintenance.Models.OrderStatus.New, CreatedAt = DateTime.UtcNow.AddDays(-1) },
+            new CarMaintenance.Models.Order { UserId = 2, VehicleId = 2, ServiceId = 2, Address = "456 Oak St", PhoneNumber = "555-5678", OrderStatus = CarMaintenance.Models.OrderStatus.Completed, CreatedAt = DateTime.UtcNow.AddDays(-2) }
+        );
+        context.SaveChanges();
+    }
+}
 
 // Middleware order مهم جدًا 👇
 app.UseSwagger();
