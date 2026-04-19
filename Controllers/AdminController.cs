@@ -77,24 +77,36 @@ public IActionResult GetDashboard()
             }
         },
 
-        notifications = new List<object>
-        {
-            new {
-                title = "طلب جديد",
-                message = "تم إضافة طلب جديد",
-                type = "info"
-            },
-            new {
-                title = "تم قبول الطلب",
-                message = "تم قبول أحد الطلبات",
-                type = "success"
-            },
-            new {
-                title = "طلب مرفوض",
-                message = "تم رفض طلب",
-                type = "warning"
-            }
-        }
+     notifications = new List<object>
+{
+    new {
+        id = 1,
+        title = "طلب طوارئ جديد",
+        description = "طلب طوارئ في الجيزة - الهرم، يحتاج موافقة فورية",
+        time = "منذ دقيقتين",
+        type = "urgent",
+        color = "red",
+        icon = "alert"
+    },
+    new {
+        id = 2,
+        title = "فني غير متاح",
+        description = "الفني عمر سعيد أبلغ عن عطل في السيارة",
+        time = "منذ 15 دقيقة",
+        type = "warning",
+        color = "yellow",
+        icon = "user"
+    },
+    new {
+        id = 3,
+        title = "دفعة جديدة",
+        description = "تم استلام دفعة بقيمة 500 جنيه من العميل محمد أحمد",
+        time = "منذ 30 دقيقة",
+        type = "success",
+        color = "green",
+        icon = "money"
+    }
+}
     };
 
     return Ok(new ApiResponse<object>(
