@@ -17,7 +17,6 @@ namespace CarMaintenance.Controllers
             _service = service;
         }
 
-        // 🔹 Get All Orders
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -29,7 +28,6 @@ namespace CarMaintenance.Controllers
             ));
         }
 
-        // 🔹 Get Order By Id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -41,7 +39,6 @@ namespace CarMaintenance.Controllers
             return Ok(ApiResponse<Order>.SuccessResponse(order));
         }
 
-        // 🔹 Create Order
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateOrderDto dto)
         {
@@ -53,7 +50,6 @@ namespace CarMaintenance.Controllers
             ));
         }
 
-        // 🔹 Update Order Status
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateOrderStatusDto dto)
         {
@@ -68,7 +64,6 @@ namespace CarMaintenance.Controllers
             ));
         }
 
-        // 🔹 Cancel Order
         [HttpDelete("{id}")]
         public async Task<IActionResult> Cancel(int id)
         {

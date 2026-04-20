@@ -8,4 +8,4 @@ namespace CarMaintenance.Models
         Completed,
         Canceled
     }
-}
+    }
