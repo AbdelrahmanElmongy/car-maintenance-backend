@@ -34,42 +34,57 @@ public class AdminController : ControllerBase
             latestRequests = new List<object>
             {
                 new {
-                    id = 1,
-                    customerName = "أحمد محمد",
-                    service = "تغيير زيت المحرك",
+                    orderNumber="#12849",
+                    customerName = " محمد أحمد علي",
+                    service = "تغيير الزيت ",
+                    customerRate=4.8,
                     price = 350,
+                    address="القاهرة , مدينة نصر , شارع عباس العقاد 45",
                     status = "pending",
-                    date = "2026-04-19"
+                    date = "2026-03-31",
+                    phoneNumber=01012345678
                 },
                 new {
-                    id = 2,
-                    customerName = "حسن علي",
+                    orderNumber="#12848",
+                    customerName = "احمد محمود حسن ",
                     service = "تغيير البطارية",
+                    customerRate=4.5,
                     price = 500,
-                    status = "completed",
-                    date = "2026-04-18"
-                },
-                new {
-                    id = 3,
-                    customerName = "محمد سامي",
-                    service = "صيانة فرامل",
-                    price = 250,
-                    status = "inProgress",
-                    date = "2026-04-17"
-                },
-                new {
-                    id = 4,
-                    customerName = "يوسف أحمد",
-                    service = "خدمة طوارئ",
-                    price = 300,
+                    address="الجيزة , المهندسين  , شارع  السودان 23",
                     status = "pending",
-                    date = "2026-04-16"
+                    date = "2026-03-31",
+                    phoneNumber=01098765432
+                },
+                new {
+                    orderNumber="#12847",
+                    customerName = "خالد عبدالله",
+                    service = "خدمة الاطارات ",
+                    customerRate=4.9,
+                    price = 250,
+                    address="الفاهرة , التجمع الخانس  , جنوب الاكاديمية",
+                    status = "pending",
+                    date = "2026-03-31",
+                    phoneNumber=01123456789
+                },
+                new {
+                    orderNumber="#12846",
+                    customerName = "يوسف ابراهيم",
+                    service = "خدمة طوارئ",
+                    customerRate=4.2,
+                    price = 300,
+                    address="الفاهرة , مصر الجديدة   ,  الحي العاشر",
+                    status = "pending",
+                    date = "2026-03-31",
+                    phoneNumber=01234567890
                 }
             },
 
+        
             technicians = new List<object>
             {
+                
                 new {
+                    
                     name = "محمد أحمد",
                     rating = 4.8,
                     completedJobs = 145,
@@ -118,8 +133,63 @@ public class AdminController : ControllerBase
             color = "green",
             icon = "money"
         }
+    },
+    
+    currentOrders = new List<object>
+{
+    new {
+        id = 12845,
+        customerName = "عمر سعيد",
+        technicianName = "محمد أحمد",
+        service = "غسيل السيارة",
+        location = "القاهرة - النزهة",
+        price = 200,
+        time = "02:30 PM",
+        status = "inProgress"
+    },
+    new {
+        id = 12844,
+        customerName = "حسن علي",
+        technicianName = "أحمد علي",
+        service = "تغيير الزيت",
+        location = "الجيزة - الدقي",
+        price = 350,
+        time = "01:15 PM",
+        status = "inProgress"
+    },
+    new {
+        id = 12843,
+        customerName = "فاطمة محمد",
+        technicianName = "حسام الدين",
+        service = "خدمة ونش",
+        location = "القاهرة - مدينة نصر",
+        price = 600,
+        time = "12:00 PM",
+        status = "completed"
+    },
+    new {
+        id = 12842,
+        customerName = "سارة أحمد",
+        technicianName = "خالد محمود",
+        service = "تغيير البطارية",
+        location = "الجيزة - المهندسين",
+        price = 500,
+        time = "11:30 AM",
+        status = "completed"
+    },
+    new {
+        id = 12841,
+        customerName = "محمود حسن",
+        technicianName = "يوسف حسن",
+        service = "خدمة الإطارات",
+        location = "القاهرة - التجمع الخامس",
+        price = 250,
+        time = "10:45 AM",
+        status = "completed"
     }
+}
         };
+        
 
         return Ok(new ApiResponse<object>(
             true,
